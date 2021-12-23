@@ -2,9 +2,12 @@
 
 <section class="hero">
   <div class="container">
-    <h1 class="hero-title">Красивые ёлки и новогодние игрушки Ёлки-палки</h1>
-    <p class="hero-description">первая в россии эксклюзивная доставка ёлок и игрушек для людей, которые ждут <b>новый
-        год</b></p>
+    <h1 class="hero-title">
+      <?php the_field('main_title') ?>
+    </h1>
+    <p class="hero-description">
+      <?php the_field('main_subtitle') ?>
+    </p>
 
     <!-- Слайдер с цветами -->
     <div class="swiper-container trees-slider">
@@ -40,9 +43,9 @@
     </div>
     <!-- ./swiper-container -->
 
-    <span class="hero-cta">Закажите ёлку со скидкой 10%</span>
+    <span class="hero-cta"><?php the_field('main_action') ?></span>
 
-    <a data-fancybox data-src="#alert" href="javascript:;" class="button">Заказать ёлку</a>
+    <a data-fancybox data-src="#alert" href="javascript:;" class="button"><?php the_field('main_button') ?></a>
 
   </div>
   <!-- /.container -->
@@ -50,44 +53,45 @@
 
 <section class="reviews">
   <div class="container">
-    <h2 class="section-title">Мы доставляем только лучшие ёлки</h2>
+    <h2 class="section-title"><?php the_field('main_reviews_title') ?></h2>
 
     <!-- Слайдер с отзывами -->
     <div class="swiper-container reviews-slider">
       <!-- обертка слайдов -->
       <div class="swiper-wrapper">
         <!-- слайды -->
-        <div class="swiper-slide review-slide d-flex flex-column flex-md-row align-items-center">
-          <div class="review-image d-flex align-items-center justify-content-center flex-column">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/reviews/review-1.png" alt="review">
-            <span class="review-name">Дарья Макеева</span>
-            <span class="review-city">г. Санкт-Петербург</span>
-          </div>
-          <div class="review-text">
-            <p class="review">
-              Я очень довольна таким отношением к делу. Обслужили просто превосходно, я заказывала по телефону — так
-              подробно мне всё объяснили, помогли выбрать ёлку для моей квартиры, и доставили домой, она очень
-              понравилась, спасибо вам огромное.
-            </p>
-            <!-- <a href="javascript:;" id="review-1" class="review-link">Посмотреть фотографии ёлки</a> -->
-          </div>
-        </div>
-        <!-- ./swiper-slide -->
-        <div class="swiper-slide review-slide d-flex flex-column flex-md-row align-items-center">
-          <div class="review-image d-flex align-items-center justify-content-center flex-column">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/reviews/review-1.png" alt="review">
-            <span class="review-name">Дарья Макеева</span>
-            <span class="review-city">г. Санкт-Петербург</span>
-          </div>
-          <div class="review-text">
-            <p class="review">
-              Я очень довольна таким отношением к делу. Обслужили просто превосходно, я заказывала по телефону — так
-              подробно мне всё объяснили, помогли выбрать ёлку для моей квартиры, и доставили домой, она очень
-              понравилась, спасибо вам огромное.
-            </p>
-            <!-- <a href="javascript:;" id="review-1" class="review-link">Посмотреть фотографии ёлки</a> -->
-          </div>
-        </div>
+        <?php
+          global $post;
+          $myposts = get_posts([ 
+            'numberposts' => 5,
+            'post_type'   => 'reviews',
+          ]);
+
+          if( $myposts ){
+            foreach( $myposts as $post ){
+              setup_postdata( $post );
+              ?>
+                <div class="swiper-slide review-slide d-flex flex-column flex-md-row align-items-center">
+                  <div class="review-image d-flex align-items-center justify-content-center flex-column">
+                    <img src="<?php the_field('review_image') ?>" alt="review">
+                    <span class="review-name"><?php the_title() ?></span>
+                    <span class="review-city"><?php the_field('review_city') ?></span>
+                  </div>
+                  <div class="review-text">
+                    <p class="review">
+                      <?php the_content() ?>
+                    </p>
+                    <!-- <a href="javascript:;" id="review-1" class="review-link">Посмотреть фотографии ёлки</a> -->
+                  </div>
+                </div>
+              <?php 
+            }
+          } else {
+            // Постов не найдено
+          }
+
+          wp_reset_postdata(); // Сбрасываем $post
+        ?>
         <!-- ./swiper-slide -->
       </div>
       <!-- ./swiper-wrapper -->
@@ -141,330 +145,75 @@
 
 <section class="goods">
   <div class="container">
-    <h2 class="section-title">Наряди свою ёлку <span>прямо сейчас!</span></h2>
-    <p class="section-description">Выберите желаемые игрушки и наши ребята красиво оформят и доставят ёлку прямо до
-      дверей вашей квартиры!</p>
+    <h2 class="section-title"><?php the_field('main_goods_title') ?></h2>
+    <p class="section-description"><?php the_field('main_goods_description') ?></p>
 
     <div class="row">
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/toy-1.png" alt="toy" class="card-image">
-          <h3 class="card-title">Ёлочная игрушка</h3>
-          <span class="card-label">Выберите цвет:</span>
 
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="toy-white"></label>
-            <input class="color-input" type="radio" name="color" id="toy-white" value="white">
-
-            <label class="color-label yellow" for="toy-yellow"></label>
-            <input class="color-input" type="radio" name="color" id="toy-yellow" value="yellow">
-
-            <label class="color-label green" for="toy-green"></label>
-            <input class="color-input" type="radio" name="color" id="toy-green" value="green">
-
-            <label class="color-label red" for="toy-red"></label>
-            <input class="color-input" type="radio" name="color" id="toy-red" value="red">
-
-            <label class="color-label blue" for="toy-blue"></label>
-            <input class="color-input" type="radio" name="color" id="toy-blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-1.png" alt="tree" class="card-image">
-          <h3 class="card-title">Живая ёлка</h3>
-          <span class="card-label">Выберите цвет игрушек:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/toy-2.png" alt="toy" class="card-image">
-          <h3 class="card-title">Ёлочная игрушка</h3>
-          <span class="card-label">Выберите цвет:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-3.png" alt="tree" class="card-image">
-          <h3 class="card-title">Искусственная ёлка</h3>
-          <span class="card-label">Выберите цвет игрушек:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/toy-4.png" alt="toy" class="card-image">
-          <h3 class="card-title">Ёлочная игрушка</h3>
-          <span class="card-label">Выберите цвет:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-5.png" alt="tree" class="card-image">
-          <h3 class="card-title">Ёлочка в горшке</h3>
-          <span class="card-label">Выберите цвет игрушек:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/toy-2.png" alt="toy" class="card-image">
-          <h3 class="card-title">Ёлочная игрушка</h3>
-          <span class="card-label">Выберите цвет:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/toy-3.png" alt="toy" class="card-image">
-          <h3 class="card-title">Ёлочная игрушка</h3>
-          <span class="card-label">Выберите цвет:</span>
-
-          <div class="colors d-flex align-items-center justify-content-between">
-            <label class="color-label white" for="white"></label>
-            <input class="color-input" type="radio" name="color" id="white" value="white">
-
-            <label class="color-label yellow" for="yellow"></label>
-            <input class="color-input" type="radio" name="color" id="yellow" value="yellow">
-
-            <label class="color-label green" for="green"></label>
-            <input class="color-input" type="radio" name="color" id="green" value="green">
-
-            <label class="color-label red" for="red"></label>
-            <input class="color-input" type="radio" name="color" id="red" value="red">
-
-            <label class="color-label blue" for="blue"></label>
-            <input class="color-input" type="radio" name="color" id="blue" value="blue">
-          </div>
-          <!-- /.colors -->
-
-          <span class="card-label">Количество:</span>
-
-          <div class="counter-group d-flex justify-content-center align-items-center">
-            <button class="counter-button counter-button-minus">-</button>
-            <input type="text" class="counter-input" value="1">
-            <button class="counter-button counter-button-plus">+</button>
-          </div>
-          <!-- /.counter-group -->
-
-          <button class="button card-button">Заказать</button>
-
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col-lg-3 col-md-6 -->
+    <?php
+      global $post;
+      $myposts = [
+        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-1.png' ],
+        [ 'title' => 'Живая ёлка',         'img' => '/img/trees/tree-1.png' ],
+        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-2.png' ],
+        [ 'title' => 'Искусственная ёлка', 'img' => '/img/trees/tree-3.png' ],
+        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-4.png' ],
+        [ 'title' => 'Ёлочка в горшке',    'img' => '/img/trees/tree-5.png' ],
+        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-2.png' ],
+        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-3.png' ],
+      ];
+
+      if( $myposts ){
+        foreach( $myposts as $post ){
+          setup_postdata( $post );
+          ?>
+            <div class="col-lg-3 col-md-6">
+              <div class="card">
+                <img src="<?php echo get_template_directory_uri(); ?><?php echo $post['img'] ?>" alt="toy" class="card-image">
+                <h3 class="card-title"><?php $post['title'] ?></h3>
+                <span class="card-label">Выберите цвет:</span>
+
+                <div class="colors d-flex align-items-center justify-content-between">
+                  <label class="color-label white" for="toy-white"></label>
+                  <input class="color-input" type="radio" name="color" id="toy-white" value="white">
+
+                  <label class="color-label yellow" for="toy-yellow"></label>
+                  <input class="color-input" type="radio" name="color" id="toy-yellow" value="yellow">
+
+                  <label class="color-label green" for="toy-green"></label>
+                  <input class="color-input" type="radio" name="color" id="toy-green" value="green">
+
+                  <label class="color-label red" for="toy-red"></label>
+                  <input class="color-input" type="radio" name="color" id="toy-red" value="red">
+
+                  <label class="color-label blue" for="toy-blue"></label>
+                  <input class="color-input" type="radio" name="color" id="toy-blue" value="blue">
+                </div>
+                <!-- /.colors -->
+
+                <span class="card-label">Количество:</span>
+
+                <div class="counter-group d-flex justify-content-center align-items-center">
+                  <button class="counter-button counter-button-minus">-</button>
+                  <input type="text" class="counter-input" value="1">
+                  <button class="counter-button counter-button-plus">+</button>
+                </div>
+                <!-- /.counter-group -->
+
+                <button class="button card-button">Заказать</button>
+
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col-lg-3 col-md-6 -->
+          <?php 
+        }
+      } else {
+        // Постов не найдено
+      }
+
+      wp_reset_postdata(); // Сбрасываем $post
+    ?>
     </div>
     <!-- /.row -->
 
@@ -476,10 +225,10 @@
 
 <section class="offer">
   <div class="container">
-    <h2 class="section-title offer-title">Остались вопросы?</h2>
-    <a data-fancybox data-src="#modal" href="javascript:;" class="offer-link">Закажите звонок нашего специалиста!</a>
-    <span class="offer-label">или позвоните по телефону</span>
-    <a href="tel:+78006548745" class="offer-phone">8 (800) 654-87-45</a>
+    <h2 class="section-title offer-title"><?php the_field('main_offer_title') ?></h2>
+    <a data-fancybox data-src="#modal" href="javascript:;" class="offer-link"><?php the_field('main_offer_action') ?></a>
+    <span class="offer-label"><?php the_field('main_offer_action2') ?></span>
+    <a href="tel:+78006548745" class="offer-phone"><?php the_field('phone') ?></a>
   </div>
   <!-- /.container -->
 </section>

@@ -23,7 +23,7 @@
       <!-- /.col-md-6 -->
       <div class="col-md-6 footer-info">
         <span class="footer-label">Отдел обслуживания клиентов</span>
-        <a href="tel:+78006548745" class="footer-phone">8 (800) 654-87-45</a>
+        <a href="tel:+78006548745" class="footer-phone"><?php the_field('phone') ?></a>
         <span class="footer-label">Ежедневно, круглосуточно.</span>
       </div>
       <!-- /.col-md-6 -->
