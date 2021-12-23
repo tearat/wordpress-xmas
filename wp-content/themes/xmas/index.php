@@ -110,33 +110,26 @@
 <section class="advantages">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 mb-5 mb-md-0">
-        <div class="advantages-wrapper">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/advantages/advantages-1.png"
-            alt="Доставляем ёлки прямо до дверей квартиры" class="advantages-image">
-        </div>
-        <!-- /.advantage-wrapper -->
-        <h3 class="advantages-title">Доставляем ёлки прямо до дверей квартиры</h3>
-      </div>
-      <!-- /.col -->
-      <div class="col-md-4 mb-5 mb-md-0">
-        <div class="advantages-wrapper">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/advantages/advantages-2.png"
-            alt="Игрушки выполнены качественно и ваш кот их не разобьет" class="advantages-image">
-        </div>
-        <!-- /.advantages-wrapper -->
-        <h3 class="advantages-title">Игрушки выполнены качественно и ваш кот их не разобьет</h3>
-      </div>
-      <!-- /.col -->
-      <div class="col-md-4 mb-5 mb-md-0">
-        <div class="advantages-wrapper">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/advantages/advantages-3.png"
-            alt="Мы являемся первыми на рынке и всегда рады помочь с выбором ёлки" class="advantages-image">
-        </div>
-        <!-- /.advantages-wrapper -->
-        <h3 class="advantages-title">Мы являемся первыми на рынке и всегда рады помочь с выбором ёлки</h3>
-      </div>
-      <!-- /.col -->
+    <?php
+      global $post;
+      $myposts = get_posts([ 'numberposts' => 5, 'post_type'   => 'advantages' ]);
+
+      if( $myposts ){
+        foreach( $myposts as $post ){
+          setup_postdata( $post );
+          ?>
+            <div class="col-md-4 mb-5 mb-md-0">
+              <div class="advantages-wrapper">
+                <img src="<?php the_field('advantage_image') ?>"
+                  alt="<?php the_title() ?>" class="advantages-image">
+              </div>
+              <h3 class="advantages-title"><?php the_title() ?></h3>
+            </div>
+          <?php 
+        }
+      }
+      wp_reset_postdata(); // Сбрасываем $post
+    ?>
     </div>
     <!-- /.row -->
   </div>
