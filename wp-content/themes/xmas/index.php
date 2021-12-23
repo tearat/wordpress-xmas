@@ -115,7 +115,7 @@
       $myposts = get_posts([ 'numberposts' => 5, 'post_type'   => 'advantages' ]);
 
       if( $myposts ){
-        foreach( $myposts as $post ){
+        foreach( array_reverse($myposts) as $post ){
           setup_postdata( $post );
           ?>
             <div class="col-md-4 mb-5 mb-md-0">
