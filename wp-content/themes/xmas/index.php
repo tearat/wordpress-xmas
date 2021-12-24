@@ -112,10 +112,14 @@
     <div class="row">
     <?php
       global $post;
-      $myposts = get_posts([ 'numberposts' => 5, 'post_type'   => 'advantages' ]);
+      $myposts = get_posts([ 
+        'numberposts' => 5, 
+        'post_type'=> 'advantages', 
+        'order' => 'asc' 
+      ]);
 
       if( $myposts ){
-        foreach( array_reverse($myposts) as $post ){
+        foreach( $myposts as $post ){
           setup_postdata( $post );
           ?>
             <div class="col-md-4 mb-5 mb-md-0">
