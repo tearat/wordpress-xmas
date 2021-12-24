@@ -147,69 +147,53 @@
 
     <div class="row">
 
-    <?php
-      global $post;
-      $myposts = [
-        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-1.png' ],
-        [ 'title' => 'Живая ёлка',         'img' => '/img/trees/tree-1.png' ],
-        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-2.png' ],
-        [ 'title' => 'Искусственная ёлка', 'img' => '/img/trees/tree-3.png' ],
-        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-4.png' ],
-        [ 'title' => 'Ёлочка в горшке',    'img' => '/img/trees/tree-5.png' ],
-        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-2.png' ],
-        [ 'title' => 'Ёлочная игрушка',    'img' => '/img/trees/toy-3.png' ],
-      ];
+    <?php 
+    // параметры по умолчанию
+      $my_posts = get_posts( array(
+        'numberposts'   => 12,
+        'post_type'     => 'post',
+      ) );
 
-      if( $myposts ){
-        foreach( $myposts as $post ){
-          setup_postdata( $post );
-          ?>
-            <div class="col-lg-3 col-md-6">
-              <div class="card">
-                <img src="<?php echo get_template_directory_uri(); ?><?php echo $post['img'] ?>" alt="toy" class="card-image">
-                <h3 class="card-title"><?php $post['title'] ?></h3>
-                <span class="card-label">Выберите цвет:</span>
+      foreach( $my_posts as $post ){
+        setup_postdata( $post );
+        ?>
+          <div class="col-lg-3 col-md-6">
+            <form class="card">
+              <img src="<?php the_field('product_image') ?>" alt="toy" class="card-image">
+              <h3 class="card-title"><?php the_title() ?></h3>
+              <span class="card-label">Выберите цвет:</span>
 
-                <div class="colors d-flex align-items-center justify-content-between">
-                  <label class="color-label white" for="toy-white"></label>
-                  <input class="color-input" type="radio" name="color" id="toy-white" value="white">
-
-                  <label class="color-label yellow" for="toy-yellow"></label>
-                  <input class="color-input" type="radio" name="color" id="toy-yellow" value="yellow">
-
-                  <label class="color-label green" for="toy-green"></label>
-                  <input class="color-input" type="radio" name="color" id="toy-green" value="green">
-
-                  <label class="color-label red" for="toy-red"></label>
-                  <input class="color-input" type="radio" name="color" id="toy-red" value="red">
-
-                  <label class="color-label blue" for="toy-blue"></label>
-                  <input class="color-input" type="radio" name="color" id="toy-blue" value="blue">
-                </div>
-                <!-- /.colors -->
-
-                <span class="card-label">Количество:</span>
-
-                <div class="counter-group d-flex justify-content-center align-items-center">
-                  <button class="counter-button counter-button-minus">-</button>
-                  <input type="text" class="counter-input" value="1">
-                  <button class="counter-button counter-button-plus">+</button>
-                </div>
-                <!-- /.counter-group -->
-
-                <button class="button card-button">Заказать</button>
-
+              <div class="colors d-flex align-items-center justify-content-center">
+                <?php 
+                  $colors = get_field('product_colors');
+                  foreach($colors as $key => $color) {
+                    ?>
+                      <label class="color-label <?php echo $color['value'] ?>" for="toy-<?php echo $color['value'] ?>"></label>
+                      <input class="color-input" type="radio" name="color" id="toy-<?php echo $color['value'] ?>" value="<?php echo $color['label'] ?>">
+                    <?php
+                  }
+                ?>
               </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col-lg-3 col-md-6 -->
-          <?php 
-        }
-      } else {
-        // Постов не найдено
-      }
+              <!-- /.colors -->
 
-      wp_reset_postdata(); // Сбрасываем $post
+              <span class="card-label">Количество:</span>
+
+              <div class="counter-group d-flex justify-content-center align-items-center">
+                <button class="counter-button counter-button-minus">-</button>
+                <input type="text" class="counter-input" value="1">
+                <button class="counter-button counter-button-plus">+</button>
+              </div>
+              <!-- /.counter-group -->
+
+              <button type="submit" class="button card-button">Заказать</button>
+
+            </form>
+            <!-- /.card -->
+          </div>
+          <!-- /.col-lg-3 col-md-6 -->
+        <?php
+      }
+      wp_reset_postdata(); // сброс
     ?>
     </div>
     <!-- /.row -->
