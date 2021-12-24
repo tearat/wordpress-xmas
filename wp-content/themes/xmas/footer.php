@@ -35,9 +35,10 @@
 
 <div class="modal" id="modal">
   <h2 class="modal-title">Закажите обратный звонок</h2>
-  <form action="#">
-    <input type="tel" class="modal-input" placeholder="+7 (___) __-__-___">
-    <button class="button modal-button">Перезвоните мне</button>
+  <form id="modal-form" action="<?php echo admin_url('admin-ajax.php') ?>" method="post">
+    <input type="hidden" name="action" value="send_phone">
+    <input type="tel" name="phone" class="modal-input" placeholder="+7 (___) __-__-___">
+    <button type="submit" class="button modal-button">Перезвоните мне</button>
   </form>
 </div>
 

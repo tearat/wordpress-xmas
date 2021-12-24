@@ -158,7 +158,9 @@
         setup_postdata( $post );
         ?>
           <div class="col-lg-3 col-md-6">
-            <form class="card">
+            <form class="card" action="<?php echo admin_url('admin-ajax.php') ?>" method="post">
+              <input type="hidden" name="action" value="send_product">
+              <input type="hidden" name="product" value="<?php the_title() ?>">
               <img src="<?php the_field('product_image') ?>" alt="toy" class="card-image">
               <h3 class="card-title"><?php the_title() ?></h3>
               <span class="card-label">Выберите цвет:</span>
@@ -167,9 +169,10 @@
                 <?php 
                   $colors = get_field('product_colors');
                   foreach($colors as $key => $color) {
+                    $checked = ($key == 0) ? 'checked' : '';
                     ?>
-                      <label class="color-label <?php echo $color['value'] ?>" for="toy-<?php echo $color['value'] ?>"></label>
-                      <input class="color-input" type="radio" name="color" id="toy-<?php echo $color['value'] ?>" value="<?php echo $color['label'] ?>">
+                      <label class="color-label <?php echo $color['value']; ?>" for="toy-<?php echo $color['value']; ?>"></label>
+                      <input class="color-input" type="radio" name="color" id="toy-<?php echo $color['value']; ?>" <?php echo $checked; ?> value="<?php echo $color['label'] ?>">
                     <?php
                   }
                 ?>
@@ -180,7 +183,7 @@
 
               <div class="counter-group d-flex justify-content-center align-items-center">
                 <button class="counter-button counter-button-minus">-</button>
-                <input type="text" class="counter-input" value="1">
+                <input name="count" type="text" class="counter-input" value="1">
                 <button class="counter-button counter-button-plus">+</button>
               </div>
               <!-- /.counter-group -->

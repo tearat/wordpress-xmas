@@ -1,5 +1,7 @@
 <?php
 
+add_theme_support('title-tag');
+
 add_action('wp_enqueue_scripts', 'xmas_add_scripts');
 function xmas_add_scripts() {
   wp_enqueue_style('style', get_stylesheet_uri());
@@ -97,4 +99,33 @@ function register_post_types(){
 		'rewrite'             => true,
 		'query_var'           => true,
 	] );
+}
+
+
+add_action( 'wp_ajax_send_product', 'send_product' );
+add_action( 'wp_ajax_nopriv_send_product', 'send_product' );
+function send_product(){
+	$product = $_POST['product'];
+	$color = $_POST['color'];
+	$count = $_POST['count'];
+	$message = "<div class='message'>";
+	$message .= "<h2>Заказ оформлен</h2>";
+	$message .= "<h3>$product</h3>";
+	$message .= "<p>Цвет: $color</p>";
+	$message .= "<p>Количество: $count</p>";
+	$message .= "<p>Когда заказ будет готов, мы с вами свяжемся!</p>";
+	$message .= "</div>";
+	echo $message;
+	wp_die();
+}
+
+add_action( 'wp_ajax_send_phone', 'send_phone' );
+add_action( 'wp_ajax_nopriv_send_phone', 'send_phone' );
+function send_phone(){
+	$phone = $_POST['phone'];
+	$message = "<div class='message'>";
+	$message .= "<h2>Спасибо, мы с вами свяжемся!</h2>";
+	$message .= "</div>";
+	echo $message;
+	wp_die();
 }
