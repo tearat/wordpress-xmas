@@ -14,8 +14,9 @@ function xmas_add_scripts() {
   wp_deregister_script( 'jquery-core' );
   wp_register_script( 'jquery-core', '//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js');
   wp_enqueue_script( 'jquery' );
-
-  wp_enqueue_script('script', get_template_directory_uri() . '/js/main.js', array(), '1.0', true);
+	
+  wp_register_script( 'fancybox', '//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', array('jquery'), '1.0', true);
+  wp_enqueue_script('script', get_template_directory_uri() . '/js/main.js', array('fancybox'), '1.0', true);
 }
 
 add_action( 'init', 'register_post_types' );
