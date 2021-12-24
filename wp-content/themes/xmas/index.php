@@ -156,6 +156,7 @@
 
       foreach( $my_posts as $post ){
         setup_postdata( $post );
+        $selectId = $post->ID . "_select";
         ?>
           <div class="col-lg-3 col-md-6">
             <form class="card" action="<?php echo admin_url('admin-ajax.php') ?>" method="post">
@@ -166,16 +167,22 @@
               <span class="card-label">Выберите цвет:</span>
 
               <div class="colors d-flex align-items-center justify-content-center">
+                <label for="<?php echo $selectId; ?>"></label>
+                <select class="color-select" name="color" id="<?php echo $selectId; ?>">
                 <?php 
                   $colors = get_field('product_colors');
                   foreach($colors as $key => $color) {
                     $checked = ($key == 0) ? 'checked' : '';
+                    $id = $post->ID . "_" . $color['value'];
                     ?>
-                      <label class="color-label <?php echo $color['value']; ?>" for="toy-<?php echo $color['value']; ?>"></label>
-                      <input class="color-input" type="radio" name="color" id="toy-<?php echo $color['value']; ?>" <?php echo $checked; ?> value="<?php echo $color['label'] ?>">
+                      <option value="<?php echo $color['label'] ?>"><?php echo $color['label'] ?></option>
+                      <!-- <label class="color-label <?php echo $color['value']; ?>" for="<?php echo $id; ?>">
+                        <input class="color-input" type="radio" name="color" id="<?php echo $id; ?>" <?php echo $checked; ?> value="<?php echo $color['label'] ?>">
+                      </label> -->
                     <?php
                   }
                 ?>
+                </select>
               </div>
               <!-- /.colors -->
 
