@@ -14,27 +14,27 @@
       <!-- Обертка слайдов -->
       <div class="swiper-wrapper">
         <!-- Слайды -->
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-1.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-2.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-3.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-4.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-5.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-6.png" alt="tree" class="slide-image">
-        </div>
-        <div class="swiper-slide">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/trees/tree-3.png" alt="tree" class="slide-image">
-        </div>
+        <?php 
+        // параметры по умолчанию
+          $my_posts = get_posts( array(
+            'numberposts'   => 7,
+            'category_name' => 'trees',
+            'orderby'       => 'date',
+            'order'         => 'ASC',
+            'post_type'     => 'post',
+          ) );
+
+          foreach( $my_posts as $post ){
+            setup_postdata( $post );
+            ?>
+              <div class="swiper-slide">
+                <img src="<?php the_field('product_image') ?>" alt="tree" class="slide-image">
+              </div>
+            <?php
+          }
+
+          wp_reset_postdata(); // сброс
+        ?>
       </div>
 
       <!-- Стрелки слайдера -->
